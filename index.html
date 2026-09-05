@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ru" class="lenis lenis-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Девчачий трип ’26 — Dubai · Ras Al Khaimah · Kuala Lumpur</title>
+
+  <meta name="referrer" content="no-referrer">
+
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#070609">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Трип ’26">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+  <style>
+    :root {
+      --pantone-yellow: #F5EFC6;
+      --sceptre-red: #E11D38;
+      --cerulean-blue: #38BDF8;
+      --java-brown: #0D0B12;
+      --ink-primary: #F8FAFC;
+      --ink-secondary: #94A3B8;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-hand: 'Caveat', cursive;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+
+      --ease-glide: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+    body { background-color: #070609; color: var(--ink-primary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; -webkit-tap-highlight-color: transparent; }
+
+    .film-grain {
+      position: fixed; inset: 0; z-index: 4000; pointer-events: none; opacity: 0.04; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .ambient-glows { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; filter: blur(90px); opacity: 0.35; }
+    .glow-blob {
+      position: absolute; width: 50vw; height: 50vw; border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, rgba(225,29,56,0.08) 50%, transparent 70%);
+      animation: floatBlob 18s ease-in-out infinite alternate;
+    }
+    .glow-blob:nth-child(2) { right: -10%; top: 40%; background: radial-gradient(circle, rgba(245,239,198,0.1) 0%, rgba(56,189,248,0.06) 60%, transparent 80%); animation-duration: 24s; animation-delay: -5s; }
+    @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, 8vh) scale(1.15); } }
+
+    .progress-rail { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: rgba(255,255,255,0.08); z-index: 150; }
+    .progress-fill { height: 100%; width: 12.5%; background: linear-gradient(90deg, var(--sceptre-red), var(--cerulean-blue)); box-shadow: 0 0 12px var(--cerulean-blue); transition: width 0.4s var(--ease-glide); }
+
+    .lock-screen {
+      position: fixed; inset: 0; z-index: 9999; background: var(--java-brown); color: var(--pantone-yellow);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .lock-screen.unlocked { opacity: 0; visibility: hidden; pointer-events: none; }
+    .lock-box {
+      max-width: 420px; width: 100%; background: rgba(18, 14, 26, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 24px; padding: 44px 32px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); backdrop-filter: blur(20px);
+    }
+    .lock-input {
+      width: 100%; background: rgba(7, 6, 9, 0.9); border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px; padding: 16px 20px; color: #FFF; font-size: 1.4rem; text-align: center; letter-spacing: 0.4em; margin: 24px 0 16px; outline: none;
+    }
+    .lock-input:focus { border-color: var(--cerulean-blue); box-shadow: 0 0 0 4px rgba(56,189,248,0.2); }
+    .lock-error { color: #FF6B6B; font-size: 0.85rem; min-height: 20px; font-weight: 500; }
+    .lock-error.shake { animation: shakeErr 0.4s var(--ease-glide); }
+    @keyframes shakeErr { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+    .protected-app { display: none; opacity: 0; transition: opacity 0.8s ease; }
+    .protected-app.visible { display: block; opacity: 1; }
+    .photo-tile.rove img { object-position: center 18%; }
+
+    .top-navigator {
+      position: sticky; top: 2px; z-index: 100; background: rgba(7, 6, 9, 0.82);
+      backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 14px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .brand-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--pantone-yellow); }
+    .brand-title span { font-family: var(--font-hand); color: var(--cerulean-blue); font-size: 1.25rem; margin-left: 4px; }
+
+    .steps-menu { display: flex; gap: 8px; overflow-x: auto; max-width: 100%; padding-bottom: 4px; scrollbar-width: none; }
+    .steps-menu::-webkit-scrollbar { display: none; }
+    .step-pill {
+      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
+      color: var(--ink-secondary); background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08); white-space: nowrap; transition: all 0.3s var(--ease-glide);
+    }
+    .step-pill.active, .step-pill:hover { background: rgba(56, 189, 248, 0.15); color: #FFF; border-color: var(--cerulean-blue); box-shadow: 0 0 15px rgba(56,189,248,0.25); transform: translateY(-1px); }
+
+    .screen-stage { display: none; min-height: calc(100vh - 80px); padding: 50px 20px 100px; max-width: 920px; margin: 0 auto; }
+    .screen-stage.active { display: block; animation: screenEnter 0.6s var(--ease-glide) forwards; }
+    .screen-stage.leaving { display: block; animation: screenLeave 0.4s var(--ease-glide) forwards; }
+    @keyframes screenEnter {
+      from { opacity: 0; transform: perspective(1500px) rotateY(-8deg) translateX(3%) scale(0.97); filter: blur(6px); }
+      to   { opacity: 1; transform: perspective(1500px) rotateY(0deg) translateX(0) scale(1); filter: blur(0); }
+    }
+    @keyframes screenLeave {
+      from { opacity: 1; transform: perspective(1500px) rotateY(0deg) translateX(0) scale(1); }
+      to   { opacity: 0; transform: perspective(1500px) rotateY(8deg) translateX(-3%) scale(0.97); }
+    }
+
+    .btn-main {
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--sceptre-red), #991b1b); color: #FFF;
+      padding: 18px 40px; border-radius: 40px; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800;
+      box-shadow: 0 10px 30px rgba(225, 29, 56, 0.35); transition: transform 0.25s var(--ease-glide), box-shadow 0.25s; width: 100%; max-width: 420px; margin: 35px auto 0;
+    }
+    .btn-main:hover { box-shadow: 0 16px 40px rgba(225, 29, 56, 0.5); transform: translateY(-3px); }
+    .btn-craft {
+      display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.12); padding: 10px 22px; border-radius: 25px;
+      font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; background: rgba(255,255,255,0.03); color: var(--ink-primary); transition: all 0.25s var(--ease-glide);
+      backdrop-filter: blur(10px);
+    }
+    .btn-craft:hover { border-color: var(--cerulean-blue); color: var(--cerulean-blue); background: rgba(56,189,248,0.08); transform: translateY(-2px); }
+
+    .cinema-overlay {
+      position: fixed; inset: 0; z-index: 999; background: radial-gradient(circle at 50% 30%, #171224 0%, #050408 80%);
+      color: #FFF; display: none; flex-direction: column; align-items: center; justify-content: space-between; padding: 50px 20px 40px; overflow: hidden;
+    }
+    .cinema-overlay.night { background: radial-gradient(circle at 50% 20%, #0d0914 0%, #020104 80%); }
+    .cinema-overlay.active { display: flex; }
+    .cinema-header { text-align: center; z-index: 10; }
+    .cinema-meta-tag { font-family: monospace; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; color: var(--cerulean-blue); }
+    .cinema-main-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); margin-top: 8px; font-weight: 500; }
+
+    .sky-decor { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; opacity: 0; animation: twinkle 2.6s ease-in-out infinite; }
+    @keyframes twinkle { 0%, 100% { opacity: 0.1; } 50% { opacity: 1; } }
+    .cloud-drift { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.03); filter: blur(10px); animation: driftCloud linear infinite; }
+    @keyframes driftCloud { from { transform: translateX(-15%); } to { transform: translateX(115%); } }
+
+    .transit-stage { position: relative; width: 100%; max-width: 580px; height: 350px; margin: 0 auto; }
+    .transit-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .transit-route {
+      fill: none; stroke: var(--cerulean-blue); stroke-width: 2.5; stroke-linecap: round;
+      stroke-dasharray: 8 10; opacity: 0.7; stroke-dashoffset: 1000;
+      animation: drawRoute 3.6s var(--ease-glide) forwards;
+    }
+    @keyframes drawRoute { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+
+    .geo-marker { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; transform: translate(-50%, -50%); }
+    .geo-dot { width: 12px; height: 12px; border-radius: 50%; background: #FFF; box-shadow: 0 0 20px #FFF; }
+    .geo-dot.dest { background: var(--pantone-yellow); box-shadow: 0 0 25px var(--pantone-yellow); }
+    .geo-tag { font-family: monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em; color: #fff; white-space: nowrap; }
+    .geo-tag.dest { color: var(--pantone-yellow); }
+    .transit-icon { position: absolute; top: 0; left: 0; width: 48px; height: 48px; offset-rotate: auto; }
+    .transit-icon.ground { offset-rotate: 0deg; }
+
+    .road-strip { position: absolute; left: 0; right: 0; bottom: 58px; height: 36px; background: #120e1a; border-top: 2px solid rgba(56,189,248,0.4); overflow: hidden; }
+    .road-strip::before {
+      content: ''; position: absolute; top: 50%; left: 0; width: 200%; height: 3px; margin-top: -1.5px;
+      background-image: repeating-linear-gradient(90deg, var(--pantone-yellow) 0 28px, transparent 28px 56px);
+      animation: roadDash 0.65s linear infinite;
+    }
+    @keyframes roadDash { from { transform: translateX(0); } to { transform: translateX(-56px); } }
+
+    .cinema-reveal-modal {
+      position: absolute; inset: 0; background: rgba(13, 11, 18, 0.96); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; z-index: 30; padding: 24px; text-align: center;
+      backdrop-filter: blur(25px);
+    }
+    .cinema-reveal-modal.show { opacity: 1; pointer-events: all; }
+    .stamp-badge {
+      font-family: monospace; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--pantone-yellow);
+      border: 2px dashed var(--pantone-yellow); border-radius: 50%; width: 88px; height: 88px; display: flex; align-items: center; justify-content: center;
+      text-align: center; line-height: 1.2; margin-bottom: 20px; transform: rotate(-14deg) scale(0); opacity: 0;
+    }
+    .cinema-reveal-modal.show .stamp-badge { animation: stampIn 0.5s var(--ease-pop) 0.15s forwards; }
+    @keyframes stampIn { to { transform: rotate(-10deg) scale(1); opacity: 1; } }
+    .reveal-photo { height: 230px; width: auto; border-radius: 16px; border: 1px solid rgba(56,189,248,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-bottom: 20px; object-fit: cover; opacity: 0; transform: translateY(15px); }
+    .cinema-reveal-modal.show .reveal-photo { animation: revealRise 0.6s var(--ease-glide) 0.25s forwards; }
+    .reveal-title { font-family: var(--font-display); font-size: 2.2rem; color: var(--cerulean-blue); font-style: italic; line-height: 1.1; opacity: 0; transform: translateY(15px); }
+    .cinema-reveal-modal.show .reveal-title { animation: revealRise 0.6s var(--ease-glide) 0.35s forwards; }
+    .reveal-subtitle { font-size: 0.9rem; color: #CBD5E1; margin-top: 8px; opacity: 0; }
+    .cinema-reveal-modal.show .reveal-subtitle { animation: revealRise 0.6s var(--ease-glide) 0.42s forwards; }
+    @keyframes revealRise { to { opacity: 1; transform: translateY(0); } }
+    .cinema-reveal-modal .btn-main { opacity: 0; transform: translateY(15px); }
+    .cinema-reveal-modal.show .btn-main { animation: revealRise 0.6s var(--ease-glide) 0.55s forwards; }
+
+    .squad-avatar-img {
+      width: 74px; height: 74px; border-radius: 50%; object-fit: cover; border: 2px solid var(--cerulean-blue); margin: 0 auto 14px;
+      box-shadow: 0 0 20px rgba(56,189,248,0.3); transition: transform 0.35s var(--ease-glide);
+    }
+    .avatar-card:hover .squad-avatar-img { transform: scale(1.08) rotate(-3deg); }
+
+    .custom-audio-player {
+      background: linear-gradient(135deg, rgba(20, 16, 30, 0.9) 0%, rgba(10, 8, 16, 0.95) 100%);
+      border: 1px solid rgba(56,189,248,0.25);
+      border-radius: 20px; padding: 20px 26px; display: flex; align-items: center; gap: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4); color: #FFF; margin: 28px 0; backdrop-filter: blur(16px);
+    }
+    .audio-play-btn {
+      width: 54px; height: 54px; border-radius: 50%; background: var(--cerulean-blue); color: var(--java-brown);
+      display: flex; align-items: center; justify-content: center; font-size: 1.35rem; font-weight: 800; transition: transform 0.25s var(--ease-pop); flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(56,189,248,0.4);
+    }
+    .audio-play-btn:hover { transform: scale(1.1); }
+    .audio-play-btn.playing { animation: pulseBeat 1.4s ease-in-out infinite; }
+    @keyframes pulseBeat { 0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0.6); } 50% { box-shadow: 0 0 0 12px rgba(56,189,248,0); } }
+
+    .filter-pills-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 24px 0 32px; }
+    .filter-btn {
+      padding: 9px 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-secondary); transition: all 0.25s var(--ease-glide);
+    }
+    .filter-btn.active, .filter-btn:hover { background: rgba(56,189,248,0.15); color: #FFF; border-color: var(--cerulean-blue); box-shadow: 0 0 15px rgba(56,189,248,0.25); }
+
+    .city-spots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 24px; }
+    .spot-card { background: rgba(18, 14, 26, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(14px); transition: transform 0.3s var(--ease-glide); }
+    .spot-card:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.4); }
+
+    .travelers-polaroid-frame {
+      background: rgba(18, 14, 26, 0.85); padding: 18px 18px 26px; border-radius: 20px; box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+      border: 1px solid rgba(56, 189, 248, 0.2); margin: 30px auto 40px; max-width: 800px; position: relative; backdrop-filter: blur(20px);
+    }
+    .travelers-photo { width: 100%; border-radius: 12px; }
+
+    .squad-roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 32px; }
+    .avatar-card { background: rgba(18, 14, 26, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; backdrop-filter: blur(14px); transition: transform 0.3s var(--ease-glide); }
+    .avatar-card:hover { transform: translateY(-5px); border-color: rgba(56,189,248,0.4); }
+
+    .step-detail-card { background: rgba(18, 14, 26, 0.75); border: 1px solid rgba(255,255,255,0.09); border-radius: 24px; padding: 36px 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); margin-bottom: 28px; backdrop-filter: blur(18px); }
+    .step-specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; background: rgba(7,6,9,0.7); border: 1px solid rgba(255,255,255,0.06); padding: 20px; border-radius: 16px; margin: 20px 0; }
+    .baggage-box { border: 1.5px dashed rgba(225, 29, 56, 0.4); background: rgba(225, 29, 56, 0.04); padding: 20px; border-radius: 16px; margin: 20px 0; }
+    .baggage-box h4 { color: var(--sceptre-red); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800; margin-bottom: 8px; }
+
+    .photo-tile { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: rgba(18, 14, 26, 0.7); padding: 8px 8px 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); backdrop-filter: blur(14px); transition: transform 0.35s var(--ease-glide); }
+    .photo-tile:hover { transform: translateY(-4px) scale(1.01); border-color: rgba(56,189,248,0.4); }
+    .photo-tile img { border-radius: 12px; width: 100%; height: 180px; object-fit: cover; }
+    .photo-tile .cap { font-family: var(--font-hand); color: var(--cerulean-blue); font-size: 1.3rem; display: block; text-align: center; margin-top: 10px; }
+  </style>
+</head>
+
+<body>
+
+  <div class="film-grain"></div>
+  <div class="ambient-glows">
+    <div class="glow-blob" style="top: -10%; left: -10%;"></div>
+    <div class="glow-blob"></div>
+  </div>
+  <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-box">
+      <span style="font-size:2.4rem;">✦</span>
+      <h2 style="font-family:var(--font-display); font-size:2.2rem; margin-top:12px; font-weight:500;">Девчачий трип ’26</h2>
+      <p style="font-size:0.88rem; color:var(--ink-secondary); margin-top:6px;">Введите общий пароль для доступа к журналу</p>
+
+      <input type="password" id="passInput" class="lock-input" placeholder="••••" maxlength="4" inputmode="numeric">
+      <button class="btn-main" id="btnLogin" style="margin:0; width:100%; background:var(--cerulean-blue); color:var(--java-brown); box-shadow:0 0 25px rgba(56,189,248,0.4);">Войти в журнал</button>
+      <div class="lock-error" id="lockError"></div>
+    </div>
+  </div>
+
+  <div class="protected-app" id="protectedApp">
+
+    <header class="top-navigator">
+      <div class="brand-title">Девчачий трип<span>’26</span></div>
+      <nav class="steps-menu">
+        <button class="step-pill active" data-target="screen-team">1. Экипаж</button>
+        <button class="step-pill" data-target="screen-flight1">2. Перелёт 1</button>
+        <button class="step-pill" data-target="screen-rak">3. RAK</button>
+        <button class="step-pill" data-target="screen-flight2">4. Air Arabia</button>
+        <button class="step-pill" data-target="screen-kl">5. Куала-Лумпур</button>
+        <button class="step-pill" data-target="screen-weeknd">6. The Weeknd</button>
+        <button class="step-pill" data-target="screen-flight3">7. Домой</button>
+        <button class="step-pill" data-target="screen-cabinet">8. Vault</button>
+      </nav>
+    </header>
+
+    <section class="screen-stage active" id="screen-team">
+      <div style="text-align:center;">
+        <span style="font-size:0.75rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--cerulean-blue); font-weight:800; display:block; margin-bottom:12px;">28 октября — 7 ноября 2026</span>
+        <h1 style="font-size:clamp(2.8rem, 6.5vw, 4.8rem); font-family:var(--font-display); font-weight:400; line-height:1; color:#FFF;">The Golden Squad ❦ 2026</h1>
+        <span style="font-family:var(--font-hand); color:var(--cerulean-blue); font-size:2.2rem; display:block; margin-top:8px;">«Новое путешествие. Новые эмоции в копилку»</span>
+      </div>
+
+      <div class="travelers-polaroid-frame">
+        <img src="travelers.jpg.JPG" alt="Команда" class="travelers-photo" onerror="this.src='travelers.jpg'">
+      </div>
+
+      <div class="squad-roles-grid">
+        <div class="avatar-card">
+          <img src="Kurenkova avatar .JPG" alt="Elena Kurenkova" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
+          <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Elena Kurenkova</div>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Добытчик провизии</span>
+          <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">С ней никто не останется голодным!</p>
+        </div>
+        <div class="avatar-card">
+          <img src="Kudriashova E avatar .JPG" alt="Elena Kudriashova" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
+          <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Elena Kudriashova</div>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Безопасность</span>
+          <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">Хранительница паспортов и документов.</p>
+        </div>
+        <div class="avatar-card">
+          <img src="Kudriashova D avatar.JPG" alt="Daria Kudriashova" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
+          <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Daria Kudriashova</div>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Логистика</span>
+          <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">Ключик ко всем броням и билетам.</p>
+        </div>
+        <div class="avatar-card">
+          <img src="Kosterina Avatar .jpg" alt="Olga Kosterina" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
+          <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Olga Kosterina</div>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Контент & Релакс</span>
+          <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">Лучшие лежаки и топ-контент.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn-main" id="btnStartJourney">НАЧАТЬ ПУТЕШЕСТВИЕ ➔ ВЗЛЁТ</button>
+      </div>
+    </section>
+
+    <div class="cinema-overlay" id="globalCinema">
+      <div class="cinema-header">
+        <span class="cinema-meta-tag" id="cinemaMeta">Flight DP991</span>
+        <h2 class="cinema-main-title" id="cinemaTitle">Москва (VKO) ➔ Dubai (DWC)</h2>
+      </div>
+      <div class="cinema-viewport" id="cinemaViewport" style="position:relative; width:100%; max-width:580px; height:350px;"></div>
+      <div style="font-family:monospace; font-size:0.78rem; color:var(--cerulean-blue); letter-spacing:0.2em;" id="cinemaSub">CINEMATIC TRANSIT MONITOR</div>
+    </div>
+
+    <section class="screen-stage" id="screen-flight1">
+      <div class="step-detail-card">
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Перелёт 1 · Победа DP991</span>
+        <h2 style="font-family:var(--font-display); font-size:2.3rem; margin:8px 0 14px; font-weight:500;">Москва (VKO) → Dubai (DWC)</h2>
+        <div class="step-specs-grid">
+          <div><small style="color:var(--ink-secondary);">Вылет</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">28.10 · 07:45</strong></div>
+          <div><small style="color:var(--ink-secondary);">Прилёт</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">28.10 · 14:20</strong></div>
+          <div><small style="color:var(--ink-secondary);">Борт</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">Boeing 737-800</strong></div>
+        </div>
+        <div class="baggage-box">
+          <h4>Нормы багажа Победы</h4>
+          <p style="font-size:0.88rem; margin-bottom:4px;"><strong>Ручная кладь:</strong> до 36×30×27 см.</p>
+          <p style="font-size:0.88rem;"><strong>Багаж:</strong> 1 место до 20 кг.</p>
+        </div>
+        <a href="https://pobeda.aero" target="_blank" rel="noopener noreferrer" class="btn-craft" style="margin-top:12px;">Сайт авиакомпании Победа ↗</a>
+      </div>
+      <div style="text-align:center;">
+        <button class="btn-main" id="btnLaunchTransfer1">Трансфер в Ras Al Khaimah (Toyota) ➔</button>
+      </div>
+    </section>
+
+    <section class="screen-stage" id="screen-rak">
+      <div style="text-align:center; margin-bottom:30px;">
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Островное побережье · 28.10 — 02.11</span>
+        <h2 style="font-size:3rem; font-family:var(--font-display); font-weight:500;">Ras Al Khaimah</h2>
+        <span style="font-family:var(--font-hand); color:var(--cerulean-blue); font-size:2.3rem;">«Здесь мы отдыхаем.»</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; margin-bottom:30px;">
+        <div class="photo-tile rove"><img src="rove.jpg.JPG" alt="Rove" onerror="this.src='rove.jpg'"><span class="cap">Rove Al Marjan 🌴</span></div>
+        <div class="photo-tile"><img src="camels.jpg.JPG" alt="Верблюды" onerror="this.src='camels.jpg'"><span class="cap">Местные жители 🐪</span></div>
+      </div>
+
+      <div class="custom-audio-player">
+        <button class="audio-play-btn" id="playDesertRose">▶</button>
+        <div>
+          <div style="font-weight:700; font-size:1.05rem;">Sting - Desert Rose</div>
+          <small style="color:var(--cerulean-blue); font-size:0.82rem; letter-spacing:0.06em;">Пляжный саундтрек Rove Al Marjan</small>
+        </div>
+        <audio id="audioDesertRose" src="Art_Beatz_Aziza_Qobilova_-_Desert_Rose_(Bib.fm).mp3"></audio>
+      </div>
+
+      <div style="text-align:center; margin-top:28px;">
+        <button class="btn-main" id="btnLaunchAirArabia">Вылет в Куала-Лумпур (Air Arabia) ➔</button>
+      </div>
+    </section>
+
+    <section class="screen-stage" id="screen-flight2">
+      <div class="step-detail-card">
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Перелёт 2 · Air Arabia G9802</span>
+        <h2 style="font-family:var(--font-display); font-size:2.3rem; margin:8px 0 14px; font-weight:500;">Шарджа (SHJ) → Куала-Лумпур (KUL)</h2>
+        <div class="step-specs-grid">
+          <div><small style="color:var(--ink-secondary);">Вылет (SHJ)</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">02.11 · 15:00</strong></div>
+          <div><small style="color:var(--ink-secondary);">Прилёт (KUL)</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">03.11 · 02:15</strong></div>
+          <div><small style="color:var(--ink-secondary);">Багаж</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">20 кг + 7 кг ручная</strong></div>
+        </div>
+
+        <div style="background: rgba(56, 189, 248, 0.08); border: 1.5px solid rgba(56, 189, 248, 0.3); padding: 22px; border-radius: 18px; margin: 22px 0;">
+          <h4 style="color: #FFF; font-size: 0.95rem; margin-bottom: 6px; font-weight: 800;">🛂 Миграционная карта MDAC (Малайзия)</h4>
+          <p style="font-size: 0.88rem; color: var(--ink-secondary); margin-bottom: 16px;">Обязательно к заполнению онлайн за 3 дня до въезда для граждан РФ.</p>
+          <a href="https://imigresen-online.imi.gov.my/mdac/main" target="_blank" rel="noopener noreferrer" class="btn-craft" style="background: var(--cerulean-blue); color: var(--java-brown); border-color: var(--cerulean-blue);">Заполнить MDAC онлайн ↗</a>
+        </div>
+        <a href="https://www.airarabia.com" target="_blank" rel="noopener noreferrer" class="btn-craft" style="margin-top:12px;">Сайт Air Arabia ↗</a>
+      </div>
+      <div style="text-align:center;">
+        <button class="btn-main" id="btnLaunchFlight2Anim">Запустить перелёт Air Arabia ➔</button>
+      </div>
+    </section>
+
+    <section class="screen-stage" id="screen-kl">
+      <div style="text-align:center; margin-bottom:30px;">
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">02.11 — 06.11</span>
+        <h2 style="font-size:3rem; font-family:var(--font-display); font-weight:500;">Kuala Lumpur</h2>
+        <p style="color:var(--ink-secondary); font-size:1rem; margin-top:6px;">Agile Bukit Bintang by Avery at KLCC</p>
+      </div>
+
+      <!-- Все актуальные фото апартаментов из вашего списка -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px; margin-bottom:30px;">
+        <div class="photo-tile"><img src="IMG_8578.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8581.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8582.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8591.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8592.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8593.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8596.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8597.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8602.png" alt="Апартаменты"></div>
+        <div class="photo-tile"><img src="IMG_8604.png" alt="Апартаменты"></div>
+      </div>
+
+      <h3 style="font-size:1.7rem; font-family:var(--font-display); text-align:center; margin-top:36px; font-weight:500;">Продукты и локации рядом</h3>
+      <div class="filter-pills-row">
+        <button class="filter-btn active" data-filter="all">Все локации</button>
+        <button class="filter-btn" data-filter="grocery">🛒 Продукты</button>
+        <button class="filter-btn" data-filter="must">⭐ Обязательно</button>
+      </div>
+
+      <div class="city-spots-grid">
+        <div class="spot-card" data-category="grocery">
+          <div>
+            <span style="font-size:0.72rem; color:var(--cerulean-blue); font-weight:800; text-transform:uppercase;">Супермаркет 24/7</span>
+            <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">7-Eleven & KK Super Mart</h4>
+            <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Круглосуточные магазины у комплекса.</p>
+          </div>
+          <a href="https://maps.google.com/?q=7-Eleven+Bukit+Bintang" target="_blank" rel="noopener noreferrer" class="btn-craft">На карте ↗</a>
+        </div>
+        <div class="spot-card" data-category="grocery must">
+          <div>
+            <span style="font-size:0.72rem; color:var(--cerulean-blue); font-weight:800; text-transform:uppercase;">Супермаркет · 300 м</span>
+            <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">Village Grocer (TRX)</h4>
+            <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Премиальный супермаркет с большой гастрономией.</p>
+          </div>
+          <a href="https://maps.google.com/?q=Village+Grocer+The+Exchange+TRX" target="_blank" rel="noopener noreferrer" class="btn-craft">На карте ↗</a>
+        </div>
+        <div class="spot-card" data-category="grocery">
+          <div>
+            <span style="font-size:0.72rem; color:var(--cerulean-blue); font-weight:800; text-transform:uppercase;">Супермаркет · 600 м</span>
+            <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">Mercato (Pavilion KL)</h4>
+            <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Европейский супермаркет в молле Pavilion.</p>
+          </div>
+          <a href="https://maps.google.com/?q=Mercato+Pavilion+KL" target="_blank" rel="noopener noreferrer" class="btn-craft">На карте ↗</a>
+        </div>
+        <div class="spot-card" data-category="must">
+          <div>
+            <span style="font-size:0.72rem; color:var(--sceptre-red); font-weight:800; text-transform:uppercase;">Символ города</span>
+            <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">Petronas Twin Towers</h4>
+            <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Культовые башни и вечернее шоу фонтанов в 20:00.</p>
+          </div>
+          <a href="https://maps.google.com/?q=Petronas+Twin+Towers" target="_blank" rel="noopener noreferrer" class="btn-craft">На карте ↗</a>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:36px;">
+        <button class="btn-main" id="btnLaunchMetro">Анимация метро на стадион ➔</button>
+      </div>
+    </section>
+
+    <section class="screen-stage" id="screen-weeknd" style="background: radial-gradient(circle at 50% 20%, rgba(225,29,56,0.12) 0%, rgba(7,6,9,0.95) 75%); border: 1px solid rgba(225,29,56,0.3); border-radius: 28px; padding: 42px 28px;">
+      <div style="text-align:center; margin-bottom:30px;">
+        <span style="font-family:monospace; color:var(--sceptre-red); font-size:0.85rem; letter-spacing:0.35em; text-transform:uppercase; font-weight:700;">04.11.2026 · Stadium Bukit Jalil</span>
+        <h2 style="font-size:clamp(3.2rem, 8vw, 6.2rem); font-family:var(--font-display); line-height:0.95; text-transform:uppercase; margin-top:12px; color:#FFF;">THE WEEKND</h2>
+        <p style="font-family:var(--font-display); font-style:italic; color:var(--pantone-yellow); font-size:1.8rem; margin-top:4px;">After Hours Til Dawn Tour</p>
+      </div>
+
+      <div class="custom-audio-player" style="border-color:rgba(225,29,56,0.4);">
+        <button class="audio-play-btn" id="playAfterHours" style="background:var(--sceptre-red); color:#FFF;">▶</button>
+        <div>
+          <div style="font-weight:700; font-size:1.05rem;">The Weeknd - After Hours</div>
+          <small style="color:var(--pantone-yellow); font-size:0.82rem;">Стадионный вайб</small>
+        </div>
+        <audio id="audioAfterHours" src="The Weeknd - After Hours.mp3"></audio>
+      </div>
+
+      <div style="background: rgba(18, 14, 26, 0.85); border:1px solid rgba(245, 239, 198, 0.25); border-radius:20px; padding:28px; margin-bottom:28px;">
+        <h3 style="color:var(--pantone-yellow); font-family:var(--font-display); font-size:1.7rem; margin-bottom:10px;">Маршрут: Апартаменты ➔ Стадион Bukit Jalil</h3>
+        <p style="font-size:0.92rem; color:#CBD5E1; margin-bottom:20px;">Самый надёжный путь без пробок — метро LRT от станции Hang Tuah до Bukit Jalil (~35 мин).</p>
+        <a href="https://maps.google.com/?q=Agile+Bukit+Bintang+to+National+Stadium+Bukit+Jalil" target="_blank" rel="noopener noreferrer" class="btn-craft" style="border-color:rgba(245,239,198,0.3); color:var(--pantone-yellow);">Открыть в Google Maps ↗</a>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn-main" id="btnLaunchEmirates">Обратный путь (Emirates) ➔</button>
+      </div>
+    </section>
+
+    <section class="screen-stage" id="screen-flight3">
+      <div class="step-detail-card">
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Возвращение домой · 06 — 07 ноября 2026</span>
+        <h2 style="font-family:var(--font-display); font-size:2.3rem; margin:8px 0 14px; font-weight:500;">Kuala Lumpur ➔ Dubai ➔ Москва</h2>
+
+        <div class="step-specs-grid">
+          <div><small style="color:var(--ink-secondary);">Вылет из KUL</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">06.11 · 18:25 (EK347)</strong></div>
+          <div><small style="color:var(--ink-secondary);">Стыковка в DXB</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">11 ч 35 мин (Dubai Connect)</strong></div>
+          <div><small style="color:var(--ink-secondary);">Вылет в DME</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">07.11 · 09:20 (EK133)</strong></div>
+        </div>
+
+        <div class="baggage-box">
+          <h4>Нормы Emirates</h4>
+          <p style="font-size:0.88rem;"><strong>Багаж:</strong> до 30 кг + 7 кг ручная кладь.</p>
+        </div>
+        <p style="font-size:0.88rem; color:var(--ink-secondary); margin-bottom:16px;"><strong>Dubai Connect:</strong> Отель, трансфер и питание на время ночной стыковки включены.</p>
+        <a href="https://www.emirates.com" target="_blank" rel="noopener noreferrer" class="btn-craft" style="margin-top:12px;">Сайт Emirates ↗</a>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn-main" id="btnLaunchFlight3Anim">Запустить обратный перелёт ➔</button>
+      </div>
+    </section>
+
+    <section class="screen-stage" id="screen-cabinet">
+      <div class="step-detail-card" style="text-align:center; padding:50px 30px;">
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Secure Travel Vault · 100% Конфиденциально</span>
+        <h2 style="font-family:var(--font-display); font-size:2.6rem; margin:10px 0 14px; font-weight:500;">Личный кабинет документов</h2>
+        <p style="font-size:0.95rem; color:var(--ink-secondary); margin-bottom:28px;">Все общие документы, сканы паспортов и билеты собраны в защищенном облаке.</p>
+
+        <div style="margin: 30px 0;">
+          <a href="https://drive.google.com/drive/folders/1uNHL-ZRgd13dCLlMjKWGEq1GwvKuGRp1" target="_blank" rel="noopener noreferrer" class="btn-main" style="background:linear-gradient(135deg, #2563EB, #1D4ED8); max-width:440px;">
+            📁 Открыть документы ↗
+          </a>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn-main" id="btnGoToHome">В начало путешествия ↺</button>
+      </div>
+    </section>
+
+    <footer>
+      <div style="text-align:center; padding:45px 0; color:var(--ink-secondary); opacity:0.7; font-size:0.82rem;">
+        Девчачий трип ’26 · Все данные защищены
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+
+      const lockScreen = document.getElementById('lockScreen');
+      const protectedApp = document.getElementById('protectedApp');
+      const passInput = document.getElementById('passInput');
+      const btnLogin = document.getElementById('btnLogin');
+      const lockError = document.getElementById('lockError');
+
+      function handleLogin() {
+        if (passInput.value === '1234') {
+          lockScreen.classList.add('unlocked');
+          protectedApp.classList.add('visible');
+          localStorage.setItem('trip26_auth', 'true');
+        } else {
+          lockError.innerText = 'Неверный пароль. Подсказка: 1234';
+          lockError.classList.remove('shake'); void lockError.offsetWidth; lockError.classList.add('shake');
+          passInput.value = '';
+        }
+      }
+      btnLogin.addEventListener('click', handleLogin);
+      passInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleLogin(); });
+      if (localStorage.getItem('trip26_auth') === 'true') {
+        lockScreen.classList.add('unlocked');
+        protectedApp.classList.add('visible');
+      }
+
+      function wireAudio(btnId, audioId) {
+        const btn = document.getElementById(btnId);
+        const audio = document.getElementById(audioId);
+        if (!btn || !audio) return;
+        btn.addEventListener('click', () => {
+          if (audio.paused) { audio.play().catch(() => {}); btn.innerText = '❚❚'; btn.classList.add('playing'); }
+          else { audio.pause(); btn.innerText = '▶'; btn.classList.remove('playing'); }
+        });
+        audio.addEventListener('pause', () => { btn.innerText = '▶'; btn.classList.remove('playing'); });
+        audio.addEventListener('play', () => { btn.innerText = '❚❚'; btn.classList.add('playing'); });
+      }
+      wireAudio('playDesertRose', 'audioDesertRose');
+      wireAudio('playAfterHours', 'audioAfterHours');
+
+      const globalCinema = document.getElementById('globalCinema');
+      const cinemaViewport = document.getElementById('cinemaViewport');
+      const cinemaMeta = document.getElementById('cinemaMeta');
+      const cinemaTitle = document.getElementById('cinemaTitle');
+      const progressFill = document.getElementById('progressFill');
+
+      const order = ['screen-team','screen-flight1','screen-rak','screen-flight2','screen-kl','screen-weeknd','screen-flight3','screen-cabinet'];
+      const screens = {};
+      order.forEach(id => screens[id] = document.getElementById(id));
+
+      function switchScreen(targetScreenId) {
+        const current = document.querySelector('.screen-stage.active');
+        const applyNext = () => {
+          Object.values(screens).forEach(s => s.classList.remove('active', 'leaving'));
+          screens[targetScreenId].classList.add('active');
+          document.querySelectorAll('.step-pill').forEach(pill => {
+            pill.classList.toggle('active', pill.getAttribute('data-target') === targetScreenId);
+          });
+          const idx = order.indexOf(targetScreenId);
+          progressFill.style.width = Math.min(100, ((idx + 1) / 8) * 100) + '%';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        if (current && current.id !== targetScreenId) {
+          current.classList.add('leaving');
+          setTimeout(applyNext, 300);
+        } else {
+          applyNext();
+        }
+      }
+
+      document.querySelectorAll('.step-pill').forEach(pill => {
+        pill.addEventListener('click', () => switchScreen(pill.getAttribute('data-target')));
+      });
+
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const spotCards = document.querySelectorAll('.spot-card');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.getAttribute('data-filter');
+          spotCards.forEach(card => {
+            const categories = card.getAttribute('data-category');
+            card.style.display = (filter === 'all' || categories.includes(filter)) ? 'flex' : 'none';
+          });
+        });
+      });
+
+      function randomStars(n) {
+        let html = '';
+        for (let i = 0; i < n; i++) {
+          html += `<div class="star" style="top:${Math.random() * 65}%; left:${Math.random() * 100}%; animation-delay:${(Math.random() * 2.6).toFixed(2)}s;"></div>`;
+        }
+        return html;
+      }
+
+      function skyDecor(withClouds) {
+        let clouds = withClouds ? `<div class="cloud-drift" style="width:120px; height:38px; top:18%; animation-duration:14s;"></div><div class="cloud-drift" style="width:90px; height:28px; top:42%; animation-duration:19s; animation-delay:-6s;"></div>` : '';
+        return `<div class="sky-decor">${randomStars(withClouds ? 16 : 28)}${clouds}</div>`;
+      }
+
+      const planeIconSVG = `<svg viewBox="0 0 64 64" width="48" height="48"><g transform="rotate(90 32 32)"><path d="M32 4 L38 26 L58 34 L58 40 L38 36 L34 54 L44 60 L44 64 L32 60 L20 64 L20 60 L30 54 L26 36 L6 40 L6 34 L26 26 Z" fill="#F5EFC6" stroke="#38BDF8" stroke-width="1.5"/></g></svg>`;
+      function groundIconSVG(kind) {
+        if (kind === 'car') {
+          return `<svg viewBox="0 0 100 46" width="74" height="34"><path d="M8 34 Q8 18 26 16 L38 16 Q46 4 62 4 L72 16 Q92 18 92 34 L92 36 L8 36 Z" fill="#F8FAFC" stroke="#38BDF8" stroke-width="2"/><circle cx="26" cy="36" r="7" fill="#0D0B12"/><circle cx="74" cy="36" r="7" fill="#0D0B12"/></svg>`;
+        }
+        return `<svg viewBox="0 0 140 46" width="100" height="34"><rect x="4" y="6" width="132" height="28" rx="10" fill="#E2E8F0" stroke="#38BDF8" stroke-width="2"/><circle cx="24" cy="38" r="6" fill="#0D0B12"/><circle cx="116" cy="38" r="6" fill="#0D0B12"/></svg>`;
+      }
+
+      function buildFlightScene({ from, to }) {
+        const pathD = 'M 60 260 Q 280 40 520 110';
+        return `<div class="transit-stage">${skyDecor(true)}<svg class="transit-svg" viewBox="0 0 580 350" preserveAspectRatio="none"><path class="transit-route" d="${pathD}"></path></svg><div class="geo-marker" style="left:60px; top:260px;"><div class="geo-dot"></div><span class="geo-tag">${from}</span></div><div class="geo-marker" style="left:520px; top:110px;"><div class="geo-dot dest"></div><span class="geo-tag dest">${to}</span></div><div class="transit-icon" id="movingIcon" style="offset-path: path('${pathD}');">${planeIconSVG}</div></div>`;
+      }
+
+      function buildGroundScene({ kind }) {
+        const pathD = kind === 'metro' ? 'M -40 0 Q 270 -14 310 0' : 'M -60 0 Q 290 10 640 0';
+        return `<div class="transit-stage">${skyDecor(false)}<div class="road-strip"></div><div class="transit-icon ground" id="movingIcon" style="bottom:58px; top:auto; offset-path: path('${pathD}');">${groundIconSVG(kind)}</div></div>`;
+      }
+
+      function playIconAnimation(duration) {
+        const icon = document.getElementById('movingIcon');
+        if (!icon) return;
+        icon.animate([{ offsetDistance: '0%' }, { offsetDistance: '100%' }], { duration, easing: 'cubic-bezier(0.45,0,0.55,1)', fill: 'forwards' });
+      }
+
+      function revealModalHTML({ stamp, photo, title, subtitle, btnLabel, btnColor }) {
+        return `<div class="cinema-reveal-modal" id="revealModal"><div class="stamp-badge">${stamp}</div>${photo ? `<img src="${photo.src}" class="reveal-photo">` : ''}<div class="reveal-title">${title}</div><div class="reveal-subtitle">${subtitle}</div><button class="btn-main" style="margin-top:20px; background:${btnColor};">${btnLabel}</button></div>`;
+      }
+
+      function runCinema({ meta, title, night, sceneHtml, iconDuration, reveal, revealDelay, onGo }) {
+        cinemaMeta.innerText = meta;
+        cinemaTitle.innerText = title;
+        globalCinema.classList.toggle('night', !!night);
+        cinemaViewport.innerHTML = sceneHtml;
+        globalCinema.classList.add('active');
+        requestAnimationFrame(() => playIconAnimation(iconDuration));
+        cinemaViewport.insertAdjacentHTML('beforeend', revealModalHTML(reveal));
+        setTimeout(() => document.getElementById('revealModal').classList.add('show'), revealDelay);
+        document.getElementById('revealModal').querySelector('.btn-main').addEventListener('click', () => {
+          globalCinema.classList.remove('active');
+          onGo();
+        });
+      }
+
+      document.getElementById('btnStartJourney').addEventListener('click', () => {
+        runCinema({
+          meta: 'Flight DP991 · Boeing 737-800', title: 'Москва (VKO) ➔ Dubai (DWC)', night: false,
+          sceneHtml: buildFlightScene({ from: 'VKO', to: 'DWC' }), iconDuration: 3400, revealDelay: 3400,
+          reveal: { stamp: 'DWC<br>UAE', photo: { src: 'burj.jpg.JPG' }, title: '«Добро пожаловать в Эмираты!»', subtitle: 'Посадка в DWC состоялась', btnLabel: 'Посмотреть детали ➔', btnColor: 'var(--cerulean-blue)' },
+          onGo: () => switchScreen('screen-flight1')
+        });
+      });
+
+      document.getElementById('btnLaunchTransfer1').addEventListener('click', () => {
+        runCinema({
+          meta: 'Private Transfer · Toyota', title: 'DWC Airport ➔ Rove Al Marjan', night: true,
+          sceneHtml: buildGroundScene({ kind: 'car' }), iconDuration: 3200, revealDelay: 3200,
+          reveal: { stamp: 'RAK<br>❦', photo: { src: 'rove.jpg.JPG' }, title: '«Прибыли в Rove Al Marjan!»', subtitle: '5 дней пляжного релакса', btnLabel: 'В отель ➔', btnColor: 'var(--cerulean-blue)' },
+          onGo: () => switchScreen('screen-rak')
+        });
+      });
+
+      document.getElementById('btnLaunchAirArabia').addEventListener('click', () => switchScreen('screen-flight2'));
+
+      document.getElementById('btnLaunchFlight2Anim').addEventListener('click', () => {
+        runCinema({
+          meta: 'Flight Air Arabia G9802', title: 'Sharjah (SHJ) ➔ Kuala Lumpur (KUL)', night: true,
+          sceneHtml: buildFlightScene({ from: 'SHJ', to: 'KUL' }), iconDuration: 3400, revealDelay: 3400,
+          reveal: { stamp: 'KUL<br>MY', photo: null, title: '«Добро пожаловать в Малайзию!»', subtitle: 'Приземление в Куала-Лумпуре', btnLabel: 'К апартаментам ➔', btnColor: 'var(--cerulean-blue)' },
+          onGo: () => switchScreen('screen-kl')
+        });
+      });
+
+      document.getElementById('btnLaunchMetro').addEventListener('click', () => {
+        runCinema({
+          meta: 'LRT Sri Petaling Line', title: 'Hang Tuah ➔ Bukit Jalil Stadium', night: true,
+          sceneHtml: buildGroundScene({ kind: 'metro' }), iconDuration: 3000, revealDelay: 3000,
+          reveal: { stamp: 'BJS<br>2026', photo: null, title: '«Стадион Bukit Jalil!»', subtitle: 'Встречаем The Weeknd!', btnLabel: 'На концерт ➔', btnColor: 'var(--sceptre-red)' },
+          onGo: () => switchScreen('screen-weeknd')
+        });
+      });
+
+      document.getElementById('btnLaunchEmirates').addEventListener('click', () => switchScreen('screen-flight3'));
+
+      document.getElementById('btnLaunchFlight3Anim').addEventListener('click', () => {
+        runCinema({
+          meta: 'Flight Emirates EK347 & EK133', title: 'Kuala Lumpur ➔ Dubai ➔ Москва', night: false,
+          sceneHtml: buildFlightScene({ from: 'KUL', to: 'DXB' }), iconDuration: 3400, revealDelay: 3400,
+          reveal: { stamp: 'MSK<br>♥', photo: null, title: '«Домой, в Москву!»', subtitle: 'Путешествие завершено', btnLabel: 'В кабинет документов ➔', btnColor: 'var(--cerulean-blue)' },
+          onGo: () => switchScreen('screen-cabinet')
+        });
+      });
+
+      document.getElementById('btnGoToHome').addEventListener('click', () => switchScreen('screen-team'));
+    });
+  </script>
+</body>
+</html>
