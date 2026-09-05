@@ -1,0 +1,9 @@
+{
+  "name": "Девчачий трип ’26",
+  "short_name": "Трип ’26",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#070609",
+  "theme_color": "#070609",
+  "icons": []
+}
