@@ -3,7 +3,7 @@
   "short_name": "Трип ’26",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#070609",
-  "theme_color": "#070609",
+  "background_color": "#1B1516",
+  "theme_color": "#90414D",
   "icons": []
 }
