@@ -23,7 +23,6 @@
 
   <style>
     :root {
-      /* Новая палитра на основе карточек */
       --c-pink-light: #EA84BB;
       --c-pink-coral: #C56A79;
       --c-olive-light: #A0964C;
@@ -366,7 +365,6 @@
       </div>
     </section>
 
-    <!-- RAK (Глава 3) с плеером Desert Rose -->
     <section class="screen-stage" id="screen-rak">
       <div style="text-align:center; margin-bottom:30px;">
         <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--c-sand); letter-spacing:0.12em;">Островное побережье · 28.10 — 02.11</span>
@@ -379,7 +377,6 @@
         <div class="photo-tile"><img src="camels.jpg.JPG" alt="Верблюды" onerror="this.src='camels.jpg'"><span class="cap">Местные жители 🐪</span></div>
       </div>
 
-      <!-- Кнопка Пауза / Воспроизведение Desert Rose -->
       <div class="custom-audio-player">
         <button class="audio-play-btn" id="playDesertRose">❚❚</button>
         <div>
@@ -483,15 +480,20 @@
       </div>
     </section>
 
-    <!-- The Weeknd (Глава 6) с плеером After Hours -->
+    <!-- ГЛАВА 6: THE WEEKND (с добавленными фото IMG_8806 и IMG_8805) -->
     <section class="screen-stage" id="screen-weeknd" style="background: radial-gradient(circle at 50% 20%, rgba(144,65,77,0.25) 0%, rgba(27,21,22,0.95) 75%); border: 1px solid rgba(197,106,121,0.3); border-radius: 28px; padding: 42px 28px;">
+      
+      <!-- Фото 8806 в самом начале всех надписей -->
+      <div style="margin-bottom: 24px; border-radius: 18px; overflow: hidden; border: 1px solid rgba(198,167,126,0.25); box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
+        <img src="IMG_8806.jpeg" alt="The Weeknd" style="width: 100%; height: 260px; object-fit: cover;">
+      </div>
+
       <div style="text-align:center; margin-bottom:30px;">
         <span style="font-family:monospace; color:var(--c-pink-light); font-size:0.85rem; letter-spacing:0.35em; text-transform:uppercase; font-weight:700;">04.11.2026 · Stadium Bukit Jalil</span>
         <h2 style="font-size:clamp(3.2rem, 8vw, 6.2rem); font-family:var(--font-display); line-height:0.95; text-transform:uppercase; margin-top:12px; color:#FFF;">THE WEEKND</h2>
         <p style="font-family:var(--font-display); font-style:italic; color:var(--c-sand); font-size:1.8rem; margin-top:4px;">After Hours Til Dawn Tour</p>
       </div>
 
-      <!-- Кнопка Пауза / Воспроизведение After Hours -->
       <div class="custom-audio-player" style="border-color:rgba(197,106,121,0.4);">
         <button class="audio-play-btn" id="playAfterHours">❚❚</button>
         <div>
@@ -499,6 +501,11 @@
           <small style="color:var(--c-sand); font-size:0.82rem;">Стадионный вайб</small>
         </div>
         <audio id="audioAfterHours" src="The Weeknd - After Hours.mp3" preload="auto" loop></audio>
+      </div>
+
+      <!-- Фото 8805 прямо перед плашкой маршрута -->
+      <div style="margin: 24px 0 16px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(198,167,126,0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+        <img src="IMG_8805.jpeg" alt="Маршрут на стадион" style="width: 100%; height: 200px; object-fit: cover;">
       </div>
 
       <div style="background: var(--bg-card); border:1px solid rgba(198,167,126,0.25); border-radius:20px; padding:28px; margin-bottom:28px;">
@@ -592,7 +599,6 @@
         protectedApp.classList.add('visible');
       }
 
-      /* Логика плееров с кнопками паузы/воспроизведения */
       function setupPlayer(btnId, audioId) {
         const btn = document.getElementById(btnId);
         const audio = document.getElementById(audioId);
@@ -732,7 +738,6 @@
         });
       });
 
-      /* Автоматический запуск Desert Rose на этапе трансфера в RAK */
       document.getElementById('btnLaunchTransfer1').addEventListener('click', () => {
         if (desertRosePlayer) desertRosePlayer.play();
         runCinema({
@@ -754,7 +759,6 @@
         });
       });
 
-      /* Автоматический запуск After Hours при прибытии метро на стадион */
       document.getElementById('btnLaunchMetro').addEventListener('click', () => {
         if (afterHoursPlayer) afterHoursPlayer.play();
         runCinema({
