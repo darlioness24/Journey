@@ -8,7 +8,7 @@
   <meta name="referrer" content="no-referrer">
 
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#070609">
+  <meta name="theme-color" content="#90414D">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Трип ’26">
@@ -23,12 +23,18 @@
 
   <style>
     :root {
-      --pantone-yellow: #F5EFC6;
-      --sceptre-red: #E11D38;
-      --cerulean-blue: #38BDF8;
-      --java-brown: #0D0B12;
-      --ink-primary: #F8FAFC;
-      --ink-secondary: #94A3B8;
+      /* Новая палитра на основе карточек */
+      --c-pink-light: #EA84BB;
+      --c-pink-coral: #C56A79;
+      --c-olive-light: #A0964C;
+      --c-olive-dark: #61602D;
+      --c-sand: #C6A77E;
+      --c-burgundy: #90414D;
+
+      --bg-paper: #1B1516;
+      --bg-card: rgba(35, 27, 30, 0.85);
+      --ink-primary: #FDF8F5;
+      --ink-secondary: #D4B8B2;
 
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-hand: 'Caveat', cursive;
@@ -42,7 +48,7 @@
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
-    body { background-color: #070609; color: var(--ink-primary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    body { background-color: var(--bg-paper); color: var(--ink-primary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; background: none; -webkit-tap-highlight-color: transparent; }
@@ -52,35 +58,35 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    .ambient-glows { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; filter: blur(90px); opacity: 0.35; }
+    .ambient-glows { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; filter: blur(100px); opacity: 0.3; }
     .glow-blob {
       position: absolute; width: 50vw; height: 50vw; border-radius: 50%;
-      background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, rgba(225,29,56,0.08) 50%, transparent 70%);
+      background: radial-gradient(circle, var(--c-pink-coral) 0%, var(--c-burgundy) 50%, transparent 70%);
       animation: floatBlob 18s ease-in-out infinite alternate;
     }
-    .glow-blob:nth-child(2) { right: -10%; top: 40%; background: radial-gradient(circle, rgba(245,239,198,0.1) 0%, rgba(56,189,248,0.06) 60%, transparent 80%); animation-duration: 24s; animation-delay: -5s; }
+    .glow-blob:nth-child(2) { right: -10%; top: 40%; background: radial-gradient(circle, var(--c-olive-light) 0%, var(--c-sand) 60%, transparent 80%); animation-duration: 24s; animation-delay: -5s; }
     @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, 8vh) scale(1.15); } }
 
     .progress-rail { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: rgba(255,255,255,0.08); z-index: 150; }
-    .progress-fill { height: 100%; width: 12.5%; background: linear-gradient(90deg, var(--sceptre-red), var(--cerulean-blue)); box-shadow: 0 0 12px var(--cerulean-blue); transition: width 0.4s var(--ease-glide); }
+    .progress-fill { height: 100%; width: 12.5%; background: linear-gradient(90deg, var(--c-pink-coral), var(--c-sand)); box-shadow: 0 0 12px var(--c-pink-coral); transition: width 0.4s var(--ease-glide); }
 
     .lock-screen {
-      position: fixed; inset: 0; z-index: 9999; background: var(--java-brown); color: var(--pantone-yellow);
+      position: fixed; inset: 0; z-index: 9999; background: var(--bg-paper); color: var(--c-pink-light);
       display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center;
       transition: opacity 0.6s ease, visibility 0.6s ease;
     }
     .lock-screen.unlocked { opacity: 0; visibility: hidden; pointer-events: none; }
     .lock-box {
-      max-width: 420px; width: 100%; background: rgba(18, 14, 26, 0.75);
-      border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 24px; padding: 44px 32px;
+      max-width: 420px; width: 100%; background: var(--bg-card);
+      border: 1px solid rgba(197, 106, 121, 0.3); border-radius: 24px; padding: 44px 32px;
       box-shadow: 0 30px 70px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); backdrop-filter: blur(20px);
     }
     .lock-input {
-      width: 100%; background: rgba(7, 6, 9, 0.9); border: 1px solid rgba(56, 189, 248, 0.3);
+      width: 100%; background: rgba(20, 15, 17, 0.9); border: 1px solid var(--c-pink-coral);
       border-radius: 14px; padding: 16px 20px; color: #FFF; font-size: 1.4rem; text-align: center; letter-spacing: 0.4em; margin: 24px 0 16px; outline: none;
     }
-    .lock-input:focus { border-color: var(--cerulean-blue); box-shadow: 0 0 0 4px rgba(56,189,248,0.2); }
-    .lock-error { color: #FF6B6B; font-size: 0.85rem; min-height: 20px; font-weight: 500; }
+    .lock-input:focus { border-color: var(--c-pink-light); box-shadow: 0 0 0 4px rgba(234, 132, 187, 0.2); }
+    .lock-error { color: var(--c-pink-light); font-size: 0.85rem; min-height: 20px; font-weight: 500; }
     .lock-error.shake { animation: shakeErr 0.4s var(--ease-glide); }
     @keyframes shakeErr { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 
@@ -89,13 +95,13 @@
     .photo-tile.rove img { object-position: center 18%; }
 
     .top-navigator {
-      position: sticky; top: 2px; z-index: 100; background: rgba(7, 6, 9, 0.82);
-      backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 14px 24px;
+      position: sticky; top: 2px; z-index: 100; background: rgba(27, 21, 22, 0.88);
+      backdrop-filter: blur(20px); border-bottom: 1px solid rgba(198, 167, 126, 0.15); padding: 14px 24px;
       display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .brand-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--pantone-yellow); }
-    .brand-title span { font-family: var(--font-hand); color: var(--cerulean-blue); font-size: 1.25rem; margin-left: 4px; }
+    .brand-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--c-sand); }
+    .brand-title span { font-family: var(--font-hand); color: var(--c-pink-light); font-size: 1.3rem; margin-left: 4px; }
 
     .steps-menu { display: flex; gap: 8px; overflow-x: auto; max-width: 100%; padding-bottom: 4px; scrollbar-width: none; }
     .steps-menu::-webkit-scrollbar { display: none; }
@@ -104,7 +110,7 @@
       color: var(--ink-secondary); background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.08); white-space: nowrap; transition: all 0.3s var(--ease-glide);
     }
-    .step-pill.active, .step-pill:hover { background: rgba(56, 189, 248, 0.15); color: #FFF; border-color: var(--cerulean-blue); box-shadow: 0 0 15px rgba(56,189,248,0.25); transform: translateY(-1px); }
+    .step-pill.active, .step-pill:hover { background: var(--c-burgundy); color: #FFF; border-color: var(--c-pink-coral); box-shadow: 0 0 15px rgba(197,106,121,0.3); transform: translateY(-1px); }
 
     .screen-stage { display: none; min-height: calc(100vh - 80px); padding: 50px 20px 100px; max-width: 920px; margin: 0 auto; }
     .screen-stage.active { display: block; animation: screenEnter 0.6s var(--ease-glide) forwards; }
@@ -119,133 +125,134 @@
     }
 
     .btn-main {
-      display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--sceptre-red), #991b1b); color: #FFF;
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, var(--c-burgundy), var(--c-pink-coral)); color: #FFF;
       padding: 18px 40px; border-radius: 40px; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800;
-      box-shadow: 0 10px 30px rgba(225, 29, 56, 0.35); transition: transform 0.25s var(--ease-glide), box-shadow 0.25s; width: 100%; max-width: 420px; margin: 35px auto 0;
+      box-shadow: 0 10px 30px rgba(144, 65, 77, 0.4); transition: transform 0.25s var(--ease-glide), box-shadow 0.25s; width: 100%; max-width: 420px; margin: 35px auto 0;
     }
-    .btn-main:hover { box-shadow: 0 16px 40px rgba(225, 29, 56, 0.5); transform: translateY(-3px); }
+    .btn-main:hover { box-shadow: 0 16px 40px rgba(197, 106, 121, 0.6); transform: translateY(-3px); }
+    
     .btn-craft {
-      display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.12); padding: 10px 22px; border-radius: 25px;
+      display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(198, 167, 126, 0.25); padding: 10px 22px; border-radius: 25px;
       font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; background: rgba(255,255,255,0.03); color: var(--ink-primary); transition: all 0.25s var(--ease-glide);
       backdrop-filter: blur(10px);
     }
-    .btn-craft:hover { border-color: var(--cerulean-blue); color: var(--cerulean-blue); background: rgba(56,189,248,0.08); transform: translateY(-2px); }
+    .btn-craft:hover { border-color: var(--c-pink-light); color: var(--c-pink-light); background: rgba(234,132,187,0.08); transform: translateY(-2px); }
 
     .cinema-overlay {
-      position: fixed; inset: 0; z-index: 999; background: radial-gradient(circle at 50% 30%, #171224 0%, #050408 80%);
+      position: fixed; inset: 0; z-index: 999; background: radial-gradient(circle at 50% 30%, #2D2024 0%, #120D0E 80%);
       color: #FFF; display: none; flex-direction: column; align-items: center; justify-content: space-between; padding: 50px 20px 40px; overflow: hidden;
     }
-    .cinema-overlay.night { background: radial-gradient(circle at 50% 20%, #0d0914 0%, #020104 80%); }
+    .cinema-overlay.night { background: radial-gradient(circle at 50% 20%, #1A1114 0%, #080506 80%); }
     .cinema-overlay.active { display: flex; }
     .cinema-header { text-align: center; z-index: 10; }
-    .cinema-meta-tag { font-family: monospace; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; color: var(--cerulean-blue); }
+    .cinema-meta-tag { font-family: monospace; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; color: var(--c-sand); }
     .cinema-main-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); margin-top: 8px; font-weight: 500; }
 
     .sky-decor { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-    .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; opacity: 0; animation: twinkle 2.6s ease-in-out infinite; }
+    .star { position: absolute; width: 2px; height: 2px; background: var(--c-sand); border-radius: 50%; opacity: 0; animation: twinkle 2.6s ease-in-out infinite; }
     @keyframes twinkle { 0%, 100% { opacity: 0.1; } 50% { opacity: 1; } }
-    .cloud-drift { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.03); filter: blur(10px); animation: driftCloud linear infinite; }
+    .cloud-drift { position: absolute; border-radius: 50%; background: rgba(198,167,126,0.04); filter: blur(10px); animation: driftCloud linear infinite; }
     @keyframes driftCloud { from { transform: translateX(-15%); } to { transform: translateX(115%); } }
 
     .transit-stage { position: relative; width: 100%; max-width: 580px; height: 350px; margin: 0 auto; }
     .transit-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
     .transit-route {
-      fill: none; stroke: var(--cerulean-blue); stroke-width: 2.5; stroke-linecap: round;
+      fill: none; stroke: var(--c-sand); stroke-width: 2.5; stroke-linecap: round;
       stroke-dasharray: 8 10; opacity: 0.7; stroke-dashoffset: 1000;
       animation: drawRoute 3.6s var(--ease-glide) forwards;
     }
     @keyframes drawRoute { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
 
     .geo-marker { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; transform: translate(-50%, -50%); }
-    .geo-dot { width: 12px; height: 12px; border-radius: 50%; background: #FFF; box-shadow: 0 0 20px #FFF; }
-    .geo-dot.dest { background: var(--pantone-yellow); box-shadow: 0 0 25px var(--pantone-yellow); }
-    .geo-tag { font-family: monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em; color: #fff; white-space: nowrap; }
-    .geo-tag.dest { color: var(--pantone-yellow); }
+    .geo-dot { width: 12px; height: 12px; border-radius: 50%; background: #FFF; box-shadow: 0 0 20px var(--c-sand); }
+    .geo-dot.dest { background: var(--c-pink-coral); box-shadow: 0 0 25px var(--c-pink-coral); }
+    .geo-tag { font-family: monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em; color: #fff; }
+    .geo-tag.dest { color: var(--c-pink-light); }
     .transit-icon { position: absolute; top: 0; left: 0; width: 48px; height: 48px; offset-rotate: auto; }
     .transit-icon.ground { offset-rotate: 0deg; }
 
-    .road-strip { position: absolute; left: 0; right: 0; bottom: 58px; height: 36px; background: #120e1a; border-top: 2px solid rgba(56,189,248,0.4); overflow: hidden; }
+    .road-strip { position: absolute; left: 0; right: 0; bottom: 58px; height: 36px; background: #231B1D; border-top: 2px solid var(--c-olive-light); overflow: hidden; }
     .road-strip::before {
       content: ''; position: absolute; top: 50%; left: 0; width: 200%; height: 3px; margin-top: -1.5px;
-      background-image: repeating-linear-gradient(90deg, var(--pantone-yellow) 0 28px, transparent 28px 56px);
+      background-image: repeating-linear-gradient(90deg, var(--c-sand) 0 28px, transparent 28px 56px);
       animation: roadDash 0.65s linear infinite;
     }
     @keyframes roadDash { from { transform: translateX(0); } to { transform: translateX(-56px); } }
 
     .cinema-reveal-modal {
-      position: absolute; inset: 0; background: rgba(13, 11, 18, 0.96); display: flex; flex-direction: column;
+      position: absolute; inset: 0; background: rgba(27, 21, 22, 0.97); display: flex; flex-direction: column;
       align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; z-index: 30; padding: 24px; text-align: center;
       backdrop-filter: blur(25px);
     }
     .cinema-reveal-modal.show { opacity: 1; pointer-events: all; }
     .stamp-badge {
-      font-family: monospace; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--pantone-yellow);
-      border: 2px dashed var(--pantone-yellow); border-radius: 50%; width: 88px; height: 88px; display: flex; align-items: center; justify-content: center;
+      font-family: monospace; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.25em; color: var(--c-sand);
+      border: 2px dashed var(--c-sand); border-radius: 50%; width: 88px; height: 88px; display: flex; align-items: center; justify-content: center;
       text-align: center; line-height: 1.2; margin-bottom: 20px; transform: rotate(-14deg) scale(0); opacity: 0;
     }
     .cinema-reveal-modal.show .stamp-badge { animation: stampIn 0.5s var(--ease-pop) 0.15s forwards; }
     @keyframes stampIn { to { transform: rotate(-10deg) scale(1); opacity: 1; } }
-    .reveal-photo { height: 230px; width: auto; border-radius: 16px; border: 1px solid rgba(56,189,248,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-bottom: 20px; object-fit: cover; opacity: 0; transform: translateY(15px); }
+    .reveal-photo { height: 230px; width: auto; border-radius: 16px; border: 1px solid var(--c-sand); box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-bottom: 20px; object-fit: cover; opacity: 0; transform: translateY(15px); }
     .cinema-reveal-modal.show .reveal-photo { animation: revealRise 0.6s var(--ease-glide) 0.25s forwards; }
-    .reveal-title { font-family: var(--font-display); font-size: 2.2rem; color: var(--cerulean-blue); font-style: italic; line-height: 1.1; opacity: 0; transform: translateY(15px); }
+    .reveal-title { font-family: var(--font-display); font-size: 2.2rem; color: var(--c-pink-light); font-style: italic; line-height: 1.1; opacity: 0; transform: translateY(15px); }
     .cinema-reveal-modal.show .reveal-title { animation: revealRise 0.6s var(--ease-glide) 0.35s forwards; }
-    .reveal-subtitle { font-size: 0.9rem; color: #CBD5E1; margin-top: 8px; opacity: 0; }
+    .reveal-subtitle { font-size: 0.9rem; color: var(--ink-secondary); margin-top: 8px; opacity: 0; }
     .cinema-reveal-modal.show .reveal-subtitle { animation: revealRise 0.6s var(--ease-glide) 0.42s forwards; }
     @keyframes revealRise { to { opacity: 1; transform: translateY(0); } }
     .cinema-reveal-modal .btn-main { opacity: 0; transform: translateY(15px); }
     .cinema-reveal-modal.show .btn-main { animation: revealRise 0.6s var(--ease-glide) 0.55s forwards; }
 
     .squad-avatar-img {
-      width: 74px; height: 74px; border-radius: 50%; object-fit: cover; border: 2px solid var(--cerulean-blue); margin: 0 auto 14px;
-      box-shadow: 0 0 20px rgba(56,189,248,0.3); transition: transform 0.35s var(--ease-glide);
+      width: 74px; height: 74px; border-radius: 50%; object-fit: cover; border: 2px solid var(--c-pink-coral); margin: 0 auto 14px;
+      box-shadow: 0 0 20px rgba(197,106,121,0.3); transition: transform 0.35s var(--ease-glide);
     }
     .avatar-card:hover .squad-avatar-img { transform: scale(1.08) rotate(-3deg); }
 
     .custom-audio-player {
-      background: linear-gradient(135deg, rgba(20, 16, 30, 0.9) 0%, rgba(10, 8, 16, 0.95) 100%);
-      border: 1px solid rgba(56,189,248,0.25);
+      background: linear-gradient(135deg, rgba(35, 27, 30, 0.95) 0%, rgba(20, 15, 17, 0.98) 100%);
+      border: 1px solid rgba(198, 167, 126, 0.3);
       border-radius: 20px; padding: 20px 26px; display: flex; align-items: center; gap: 20px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.4); color: #FFF; margin: 28px 0; backdrop-filter: blur(16px);
     }
     .audio-play-btn {
-      width: 54px; height: 54px; border-radius: 50%; background: var(--cerulean-blue); color: var(--java-brown);
+      width: 54px; height: 54px; border-radius: 50%; background: var(--c-pink-coral); color: #FFF;
       display: flex; align-items: center; justify-content: center; font-size: 1.35rem; font-weight: 800; transition: transform 0.25s var(--ease-pop); flex-shrink: 0;
-      box-shadow: 0 0 20px rgba(56,189,248,0.4);
+      box-shadow: 0 0 20px rgba(197,106,121,0.4);
     }
     .audio-play-btn:hover { transform: scale(1.1); }
     .audio-play-btn.playing { animation: pulseBeat 1.4s ease-in-out infinite; }
-    @keyframes pulseBeat { 0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0.6); } 50% { box-shadow: 0 0 0 12px rgba(56,189,248,0); } }
+    @keyframes pulseBeat { 0%, 100% { box-shadow: 0 0 0 0 rgba(197,106,121,0.6); } 50% { box-shadow: 0 0 0 12px rgba(197,106,121,0); } }
 
     .filter-pills-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 24px 0 32px; }
     .filter-btn {
-      padding: 9px 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px;
+      padding: 9px 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(198,167,126,0.2); border-radius: 25px;
       font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-secondary); transition: all 0.25s var(--ease-glide);
     }
-    .filter-btn.active, .filter-btn:hover { background: rgba(56,189,248,0.15); color: #FFF; border-color: var(--cerulean-blue); box-shadow: 0 0 15px rgba(56,189,248,0.25); }
+    .filter-btn.active, .filter-btn:hover { background: var(--c-burgundy); color: #FFF; border-color: var(--c-pink-light); box-shadow: 0 0 15px rgba(197,106,121,0.3); }
 
     .city-spots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 24px; }
-    .spot-card { background: rgba(18, 14, 26, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(14px); transition: transform 0.3s var(--ease-glide); }
-    .spot-card:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.4); }
+    .spot-card { background: var(--bg-card); border: 1px solid rgba(198,167,126,0.15); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(14px); transition: transform 0.3s var(--ease-glide); }
+    .spot-card:hover { transform: translateY(-4px); border-color: var(--c-pink-coral); }
 
     .travelers-polaroid-frame {
-      background: rgba(18, 14, 26, 0.85); padding: 18px 18px 26px; border-radius: 20px; box-shadow: 0 30px 70px rgba(0,0,0,0.6);
-      border: 1px solid rgba(56, 189, 248, 0.2); margin: 30px auto 40px; max-width: 800px; position: relative; backdrop-filter: blur(20px);
+      background: var(--bg-card); padding: 18px 18px 26px; border-radius: 20px; box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+      border: 1px solid rgba(198, 167, 126, 0.25); margin: 30px auto 40px; max-width: 800px; position: relative; backdrop-filter: blur(20px);
     }
     .travelers-photo { width: 100%; border-radius: 12px; }
 
     .squad-roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 32px; }
-    .avatar-card { background: rgba(18, 14, 26, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; backdrop-filter: blur(14px); transition: transform 0.3s var(--ease-glide); }
-    .avatar-card:hover { transform: translateY(-5px); border-color: rgba(56,189,248,0.4); }
+    .avatar-card { background: var(--bg-card); border: 1px solid rgba(198,167,126,0.15); border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; backdrop-filter: blur(14px); transition: transform 0.3s var(--ease-glide); }
+    .avatar-card:hover { transform: translateY(-5px); border-color: var(--c-pink-coral); }
 
-    .step-detail-card { background: rgba(18, 14, 26, 0.75); border: 1px solid rgba(255,255,255,0.09); border-radius: 24px; padding: 36px 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); margin-bottom: 28px; backdrop-filter: blur(18px); }
-    .step-specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; background: rgba(7,6,9,0.7); border: 1px solid rgba(255,255,255,0.06); padding: 20px; border-radius: 16px; margin: 20px 0; }
-    .baggage-box { border: 1.5px dashed rgba(225, 29, 56, 0.4); background: rgba(225, 29, 56, 0.04); padding: 20px; border-radius: 16px; margin: 20px 0; }
-    .baggage-box h4 { color: var(--sceptre-red); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800; margin-bottom: 8px; }
+    .step-detail-card { background: var(--bg-card); border: 1px solid rgba(198,167,126,0.2); border-radius: 24px; padding: 36px 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); margin-bottom: 28px; backdrop-filter: blur(18px); }
+    .step-specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; background: rgba(20,15,17,0.7); border: 1px solid rgba(198,167,126,0.15); padding: 20px; border-radius: 16px; margin: 20px 0; }
+    .baggage-box { border: 1.5px dashed var(--c-pink-coral); background: rgba(197, 106, 121, 0.05); padding: 20px; border-radius: 16px; margin: 20px 0; }
+    .baggage-box h4 { color: var(--c-pink-light); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800; margin-bottom: 8px; }
 
-    .photo-tile { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: rgba(18, 14, 26, 0.7); padding: 8px 8px 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); backdrop-filter: blur(14px); transition: transform 0.35s var(--ease-glide); }
-    .photo-tile:hover { transform: translateY(-4px) scale(1.01); border-color: rgba(56,189,248,0.4); }
+    .photo-tile { border-radius: 18px; overflow: hidden; border: 1px solid rgba(198,167,126,0.2); background: var(--bg-card); padding: 8px 8px 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); backdrop-filter: blur(14px); transition: transform 0.35s var(--ease-glide); }
+    .photo-tile:hover { transform: translateY(-4px) scale(1.01); border-color: var(--c-pink-coral); }
     .photo-tile img { border-radius: 12px; width: 100%; height: 180px; object-fit: cover; }
-    .photo-tile .cap { font-family: var(--font-hand); color: var(--cerulean-blue); font-size: 1.3rem; display: block; text-align: center; margin-top: 10px; }
+    .photo-tile .cap { font-family: var(--font-hand); color: var(--c-pink-light); font-size: 1.3rem; display: block; text-align: center; margin-top: 10px; }
   </style>
 </head>
 
@@ -265,7 +272,7 @@
       <p style="font-size:0.88rem; color:var(--ink-secondary); margin-top:6px;">Введите общий пароль для доступа к журналу</p>
 
       <input type="password" id="passInput" class="lock-input" placeholder="••••" maxlength="4" inputmode="numeric">
-      <button class="btn-main" id="btnLogin" style="margin:0; width:100%; background:var(--cerulean-blue); color:var(--java-brown); box-shadow:0 0 25px rgba(56,189,248,0.4);">Войти в журнал</button>
+      <button class="btn-main" id="btnLogin" style="margin:0; width:100%; box-shadow:0 0 25px rgba(197,106,121,0.4);">Войти в журнал</button>
       <div class="lock-error" id="lockError"></div>
     </div>
   </div>
@@ -288,9 +295,9 @@
 
     <section class="screen-stage active" id="screen-team">
       <div style="text-align:center;">
-        <span style="font-size:0.75rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--cerulean-blue); font-weight:800; display:block; margin-bottom:12px;">28 октября — 7 ноября 2026</span>
+        <span style="font-size:0.75rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--c-sand); font-weight:800; display:block; margin-bottom:12px;">28 октября — 7 ноября 2026</span>
         <h1 style="font-size:clamp(2.8rem, 6.5vw, 4.8rem); font-family:var(--font-display); font-weight:400; line-height:1; color:#FFF;">The Golden Squad ❦ 2026</h1>
-        <span style="font-family:var(--font-hand); color:var(--cerulean-blue); font-size:2.2rem; display:block; margin-top:8px;">«Новое путешествие. Новые эмоции в копилку»</span>
+        <span style="font-family:var(--font-hand); color:var(--c-pink-light); font-size:2.2rem; display:block; margin-top:8px;">«Новое путешествие. Новые эмоции в копилку»</span>
       </div>
 
       <div class="travelers-polaroid-frame">
@@ -301,25 +308,25 @@
         <div class="avatar-card">
           <img src="Kurenkova avatar .JPG" alt="Elena Kurenkova" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
           <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Elena Kurenkova</div>
-          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Добытчик провизии</span>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--c-pink-light); letter-spacing:0.08em;">Добытчик провизии</span>
           <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">С ней никто не останется голодным!</p>
         </div>
         <div class="avatar-card">
           <img src="Kudriashova E avatar .JPG" alt="Elena Kudriashova" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
           <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Elena Kudriashova</div>
-          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Безопасность</span>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--c-pink-light); letter-spacing:0.08em;">Безопасность</span>
           <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">Хранительница паспортов и документов.</p>
         </div>
         <div class="avatar-card">
           <img src="Kudriashova D avatar.JPG" alt="Daria Kudriashova" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
           <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Daria Kudriashova</div>
-          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Логистика</span>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--c-pink-light); letter-spacing:0.08em;">Логистика</span>
           <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">Ключик ко всем броням и билетам.</p>
         </div>
         <div class="avatar-card">
           <img src="Kosterina Avatar .jpg" alt="Olga Kosterina" class="squad-avatar-img" onerror="this.src='travelers.jpg.JPG'">
           <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;">Olga Kosterina</div>
-          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--sceptre-red); letter-spacing:0.08em;">Контент & Релакс</span>
+          <span style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--c-pink-light); letter-spacing:0.08em;">Контент & Релакс</span>
           <p style="font-size:0.86rem; color:var(--ink-secondary); margin-top:6px;">Лучшие лежаки и топ-контент.</p>
         </div>
       </div>
@@ -335,12 +342,12 @@
         <h2 class="cinema-main-title" id="cinemaTitle">Москва (VKO) ➔ Dubai (DWC)</h2>
       </div>
       <div class="cinema-viewport" id="cinemaViewport" style="position:relative; width:100%; max-width:580px; height:350px;"></div>
-      <div style="font-family:monospace; font-size:0.78rem; color:var(--cerulean-blue); letter-spacing:0.2em;" id="cinemaSub">CINEMATIC TRANSIT MONITOR</div>
+      <div style="font-family:monospace; font-size:0.78rem; color:var(--c-sand); letter-spacing:0.2em;" id="cinemaSub">CINEMATIC TRANSIT MONITOR</div>
     </div>
 
     <section class="screen-stage" id="screen-flight1">
       <div class="step-detail-card">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Перелёт 1 · Победа DP991</span>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--c-pink-light); letter-spacing:0.12em;">Перелёт 1 · Победа DP991</span>
         <h2 style="font-family:var(--font-display); font-size:2.3rem; margin:8px 0 14px; font-weight:500;">Москва (VKO) → Dubai (DWC)</h2>
         <div class="step-specs-grid">
           <div><small style="color:var(--ink-secondary);">Вылет</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">28.10 · 07:45</strong></div>
@@ -359,11 +366,12 @@
       </div>
     </section>
 
+    <!-- RAK (Глава 3) с плеером Desert Rose -->
     <section class="screen-stage" id="screen-rak">
       <div style="text-align:center; margin-bottom:30px;">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Островное побережье · 28.10 — 02.11</span>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--c-sand); letter-spacing:0.12em;">Островное побережье · 28.10 — 02.11</span>
         <h2 style="font-size:3rem; font-family:var(--font-display); font-weight:500;">Ras Al Khaimah</h2>
-        <span style="font-family:var(--font-hand); color:var(--cerulean-blue); font-size:2.3rem;">«Здесь мы отдыхаем.»</span>
+        <span style="font-family:var(--font-hand); color:var(--c-pink-light); font-size:2.3rem;">«Здесь мы отдыхаем.»</span>
       </div>
 
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; margin-bottom:30px;">
@@ -371,13 +379,14 @@
         <div class="photo-tile"><img src="camels.jpg.JPG" alt="Верблюды" onerror="this.src='camels.jpg'"><span class="cap">Местные жители 🐪</span></div>
       </div>
 
+      <!-- Кнопка Пауза / Воспроизведение Desert Rose -->
       <div class="custom-audio-player">
-        <button class="audio-play-btn" id="playDesertRose">▶</button>
+        <button class="audio-play-btn" id="playDesertRose">❚❚</button>
         <div>
           <div style="font-weight:700; font-size:1.05rem;">Sting - Desert Rose</div>
-          <small style="color:var(--cerulean-blue); font-size:0.82rem; letter-spacing:0.06em;">Пляжный саундтрек Rove Al Marjan</small>
+          <small style="color:var(--c-sand); font-size:0.82rem; letter-spacing:0.06em;">Пляжный саундтрек Rove Al Marjan</small>
         </div>
-        <audio id="audioDesertRose" src="Art_Beatz_Aziza_Qobilova_-_Desert_Rose_(Bib.fm).mp3"></audio>
+        <audio id="audioDesertRose" src="Art_Beatz_Aziza_Qobilova_-_Desert_Rose_(Bib.fm).mp3" preload="auto" loop></audio>
       </div>
 
       <div style="text-align:center; margin-top:28px;">
@@ -387,7 +396,7 @@
 
     <section class="screen-stage" id="screen-flight2">
       <div class="step-detail-card">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Перелёт 2 · Air Arabia G9802</span>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--c-pink-light); letter-spacing:0.12em;">Перелёт 2 · Air Arabia G9802</span>
         <h2 style="font-family:var(--font-display); font-size:2.3rem; margin:8px 0 14px; font-weight:500;">Шарджа (SHJ) → Куала-Лумпур (KUL)</h2>
         <div class="step-specs-grid">
           <div><small style="color:var(--ink-secondary);">Вылет (SHJ)</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">02.11 · 15:00</strong></div>
@@ -395,10 +404,10 @@
           <div><small style="color:var(--ink-secondary);">Багаж</small><strong style="display:block; font-size:1.05rem; margin-top:3px;">20 кг + 7 кг ручная</strong></div>
         </div>
 
-        <div style="background: rgba(56, 189, 248, 0.08); border: 1.5px solid rgba(56, 189, 248, 0.3); padding: 22px; border-radius: 18px; margin: 22px 0;">
+        <div style="background: rgba(198, 167, 126, 0.08); border: 1.5px solid rgba(198, 167, 126, 0.3); padding: 22px; border-radius: 18px; margin: 22px 0;">
           <h4 style="color: #FFF; font-size: 0.95rem; margin-bottom: 6px; font-weight: 800;">🛂 Миграционная карта MDAC (Малайзия)</h4>
           <p style="font-size: 0.88rem; color: var(--ink-secondary); margin-bottom: 16px;">Обязательно к заполнению онлайн за 3 дня до въезда для граждан РФ.</p>
-          <a href="https://imigresen-online.imi.gov.my/mdac/main" target="_blank" rel="noopener noreferrer" class="btn-craft" style="background: var(--cerulean-blue); color: var(--java-brown); border-color: var(--cerulean-blue);">Заполнить MDAC онлайн ↗</a>
+          <a href="https://imigresen-online.imi.gov.my/mdac/main" target="_blank" rel="noopener noreferrer" class="btn-craft" style="background: var(--c-sand); color: var(--bg-paper); border-color: var(--c-sand);">Заполнить MDAC онлайн ↗</a>
         </div>
         <a href="https://www.airarabia.com" target="_blank" rel="noopener noreferrer" class="btn-craft" style="margin-top:12px;">Сайт Air Arabia ↗</a>
       </div>
@@ -409,12 +418,11 @@
 
     <section class="screen-stage" id="screen-kl">
       <div style="text-align:center; margin-bottom:30px;">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">02.11 — 06.11</span>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--c-sand); letter-spacing:0.12em;">02.11 — 06.11</span>
         <h2 style="font-size:3rem; font-family:var(--font-display); font-weight:500;">Kuala Lumpur</h2>
         <p style="color:var(--ink-secondary); font-size:1rem; margin-top:6px;">Agile Bukit Bintang by Avery at KLCC</p>
       </div>
 
-      <!-- Все актуальные фото апартаментов из вашего списка -->
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px; margin-bottom:30px;">
         <div class="photo-tile"><img src="IMG_8578.png" alt="Апартаменты"></div>
         <div class="photo-tile"><img src="IMG_8581.png" alt="Апартаменты"></div>
@@ -438,7 +446,7 @@
       <div class="city-spots-grid">
         <div class="spot-card" data-category="grocery">
           <div>
-            <span style="font-size:0.72rem; color:var(--cerulean-blue); font-weight:800; text-transform:uppercase;">Супермаркет 24/7</span>
+            <span style="font-size:0.72rem; color:var(--c-pink-light); font-weight:800; text-transform:uppercase;">Супермаркет 24/7</span>
             <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">7-Eleven & KK Super Mart</h4>
             <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Круглосуточные магазины у комплекса.</p>
           </div>
@@ -446,7 +454,7 @@
         </div>
         <div class="spot-card" data-category="grocery must">
           <div>
-            <span style="font-size:0.72rem; color:var(--cerulean-blue); font-weight:800; text-transform:uppercase;">Супермаркет · 300 м</span>
+            <span style="font-size:0.72rem; color:var(--c-pink-light); font-weight:800; text-transform:uppercase;">Супермаркет · 300 м</span>
             <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">Village Grocer (TRX)</h4>
             <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Премиальный супермаркет с большой гастрономией.</p>
           </div>
@@ -454,7 +462,7 @@
         </div>
         <div class="spot-card" data-category="grocery">
           <div>
-            <span style="font-size:0.72rem; color:var(--cerulean-blue); font-weight:800; text-transform:uppercase;">Супермаркет · 600 м</span>
+            <span style="font-size:0.72rem; color:var(--c-pink-light); font-weight:800; text-transform:uppercase;">Супермаркет · 600 м</span>
             <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">Mercato (Pavilion KL)</h4>
             <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Европейский супермаркет в молле Pavilion.</p>
           </div>
@@ -462,7 +470,7 @@
         </div>
         <div class="spot-card" data-category="must">
           <div>
-            <span style="font-size:0.72rem; color:var(--sceptre-red); font-weight:800; text-transform:uppercase;">Символ города</span>
+            <span style="font-size:0.72rem; color:var(--c-pink-coral); font-weight:800; text-transform:uppercase;">Символ города</span>
             <h4 style="font-size:1.3rem; margin:8px 0; font-family:var(--font-display);">Petronas Twin Towers</h4>
             <p style="font-size:0.86rem; color:var(--ink-secondary); margin-bottom:16px;">Культовые башни и вечернее шоу фонтанов в 20:00.</p>
           </div>
@@ -475,26 +483,28 @@
       </div>
     </section>
 
-    <section class="screen-stage" id="screen-weeknd" style="background: radial-gradient(circle at 50% 20%, rgba(225,29,56,0.12) 0%, rgba(7,6,9,0.95) 75%); border: 1px solid rgba(225,29,56,0.3); border-radius: 28px; padding: 42px 28px;">
+    <!-- The Weeknd (Глава 6) с плеером After Hours -->
+    <section class="screen-stage" id="screen-weeknd" style="background: radial-gradient(circle at 50% 20%, rgba(144,65,77,0.25) 0%, rgba(27,21,22,0.95) 75%); border: 1px solid rgba(197,106,121,0.3); border-radius: 28px; padding: 42px 28px;">
       <div style="text-align:center; margin-bottom:30px;">
-        <span style="font-family:monospace; color:var(--sceptre-red); font-size:0.85rem; letter-spacing:0.35em; text-transform:uppercase; font-weight:700;">04.11.2026 · Stadium Bukit Jalil</span>
+        <span style="font-family:monospace; color:var(--c-pink-light); font-size:0.85rem; letter-spacing:0.35em; text-transform:uppercase; font-weight:700;">04.11.2026 · Stadium Bukit Jalil</span>
         <h2 style="font-size:clamp(3.2rem, 8vw, 6.2rem); font-family:var(--font-display); line-height:0.95; text-transform:uppercase; margin-top:12px; color:#FFF;">THE WEEKND</h2>
-        <p style="font-family:var(--font-display); font-style:italic; color:var(--pantone-yellow); font-size:1.8rem; margin-top:4px;">After Hours Til Dawn Tour</p>
+        <p style="font-family:var(--font-display); font-style:italic; color:var(--c-sand); font-size:1.8rem; margin-top:4px;">After Hours Til Dawn Tour</p>
       </div>
 
-      <div class="custom-audio-player" style="border-color:rgba(225,29,56,0.4);">
-        <button class="audio-play-btn" id="playAfterHours" style="background:var(--sceptre-red); color:#FFF;">▶</button>
+      <!-- Кнопка Пауза / Воспроизведение After Hours -->
+      <div class="custom-audio-player" style="border-color:rgba(197,106,121,0.4);">
+        <button class="audio-play-btn" id="playAfterHours">❚❚</button>
         <div>
           <div style="font-weight:700; font-size:1.05rem;">The Weeknd - After Hours</div>
-          <small style="color:var(--pantone-yellow); font-size:0.82rem;">Стадионный вайб</small>
+          <small style="color:var(--c-sand); font-size:0.82rem;">Стадионный вайб</small>
         </div>
-        <audio id="audioAfterHours" src="The Weeknd - After Hours.mp3"></audio>
+        <audio id="audioAfterHours" src="The Weeknd - After Hours.mp3" preload="auto" loop></audio>
       </div>
 
-      <div style="background: rgba(18, 14, 26, 0.85); border:1px solid rgba(245, 239, 198, 0.25); border-radius:20px; padding:28px; margin-bottom:28px;">
-        <h3 style="color:var(--pantone-yellow); font-family:var(--font-display); font-size:1.7rem; margin-bottom:10px;">Маршрут: Апартаменты ➔ Стадион Bukit Jalil</h3>
-        <p style="font-size:0.92rem; color:#CBD5E1; margin-bottom:20px;">Самый надёжный путь без пробок — метро LRT от станции Hang Tuah до Bukit Jalil (~35 мин).</p>
-        <a href="https://maps.google.com/?q=Agile+Bukit+Bintang+to+National+Stadium+Bukit+Jalil" target="_blank" rel="noopener noreferrer" class="btn-craft" style="border-color:rgba(245,239,198,0.3); color:var(--pantone-yellow);">Открыть в Google Maps ↗</a>
+      <div style="background: var(--bg-card); border:1px solid rgba(198,167,126,0.25); border-radius:20px; padding:28px; margin-bottom:28px;">
+        <h3 style="color:var(--c-sand); font-family:var(--font-display); font-size:1.7rem; margin-bottom:10px;">Маршрут: Апартаменты ➔ Стадион Bukit Jalil</h3>
+        <p style="font-size:0.92rem; color:var(--ink-secondary); margin-bottom:20px;">Самый надёжный путь без пробок — метро LRT от станции Hang Tuah до Bukit Jalil (~35 мин).</p>
+        <a href="https://maps.google.com/?q=Agile+Bukit+Bintang+to+National+Stadium+Bukit+Jalil" target="_blank" rel="noopener noreferrer" class="btn-craft" style="border-color:rgba(198,167,126,0.3); color:var(--c-sand);">Открыть в Google Maps ↗</a>
       </div>
 
       <div style="text-align:center;">
@@ -504,7 +514,7 @@
 
     <section class="screen-stage" id="screen-flight3">
       <div class="step-detail-card">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Возвращение домой · 06 — 07 ноября 2026</span>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--c-pink-light); letter-spacing:0.12em;">Возвращение домой · 06 — 07 ноября 2026</span>
         <h2 style="font-family:var(--font-display); font-size:2.3rem; margin:8px 0 14px; font-weight:500;">Kuala Lumpur ➔ Dubai ➔ Москва</h2>
 
         <div class="step-specs-grid">
@@ -528,12 +538,12 @@
 
     <section class="screen-stage" id="screen-cabinet">
       <div class="step-detail-card" style="text-align:center; padding:50px 30px;">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--cerulean-blue); letter-spacing:0.12em;">Secure Travel Vault · 100% Конфиденциально</span>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--c-sand); letter-spacing:0.12em;">Secure Travel Vault · 100% Конфиденциально</span>
         <h2 style="font-family:var(--font-display); font-size:2.6rem; margin:10px 0 14px; font-weight:500;">Личный кабинет документов</h2>
         <p style="font-size:0.95rem; color:var(--ink-secondary); margin-bottom:28px;">Все общие документы, сканы паспортов и билеты собраны в защищенном облаке.</p>
 
         <div style="margin: 30px 0;">
-          <a href="https://drive.google.com/drive/folders/1uNHL-ZRgd13dCLlMjKWGEq1GwvKuGRp1" target="_blank" rel="noopener noreferrer" class="btn-main" style="background:linear-gradient(135deg, #2563EB, #1D4ED8); max-width:440px;">
+          <a href="https://drive.google.com/drive/folders/1uNHL-ZRgd13dCLlMjKWGEq1GwvKuGRp1" target="_blank" rel="noopener noreferrer" class="btn-main" style="background:linear-gradient(135deg, var(--c-burgundy), var(--c-pink-coral)); max-width:440px;">
             📁 Открыть документы ↗
           </a>
         </div>
@@ -582,19 +592,32 @@
         protectedApp.classList.add('visible');
       }
 
-      function wireAudio(btnId, audioId) {
+      /* Логика плееров с кнопками паузы/воспроизведения */
+      function setupPlayer(btnId, audioId) {
         const btn = document.getElementById(btnId);
         const audio = document.getElementById(audioId);
-        if (!btn || !audio) return;
+        if (!btn || !audio) return null;
+
         btn.addEventListener('click', () => {
-          if (audio.paused) { audio.play().catch(() => {}); btn.innerText = '❚❚'; btn.classList.add('playing'); }
-          else { audio.pause(); btn.innerText = '▶'; btn.classList.remove('playing'); }
+          if (audio.paused) {
+            audio.play().catch(() => {});
+            btn.innerText = '❚❚';
+            btn.classList.add('playing');
+          } else {
+            audio.pause();
+            btn.innerText = '▶';
+            btn.classList.remove('playing');
+          }
         });
-        audio.addEventListener('pause', () => { btn.innerText = '▶'; btn.classList.remove('playing'); });
-        audio.addEventListener('play', () => { btn.innerText = '❚❚'; btn.classList.add('playing'); });
+        return {
+          play: () => { audio.play().catch(() => {}); btn.innerText = '❚❚'; btn.classList.add('playing'); },
+          pause: () => { audio.pause(); btn.innerText = '▶'; btn.classList.remove('playing'); },
+          audio
+        };
       }
-      wireAudio('playDesertRose', 'audioDesertRose');
-      wireAudio('playAfterHours', 'audioAfterHours');
+
+      const desertRosePlayer = setupPlayer('playDesertRose', 'audioDesertRose');
+      const afterHoursPlayer = setupPlayer('playAfterHours', 'audioAfterHours');
 
       const globalCinema = document.getElementById('globalCinema');
       const cinemaViewport = document.getElementById('cinemaViewport');
@@ -657,12 +680,12 @@
         return `<div class="sky-decor">${randomStars(withClouds ? 16 : 28)}${clouds}</div>`;
       }
 
-      const planeIconSVG = `<svg viewBox="0 0 64 64" width="48" height="48"><g transform="rotate(90 32 32)"><path d="M32 4 L38 26 L58 34 L58 40 L38 36 L34 54 L44 60 L44 64 L32 60 L20 64 L20 60 L30 54 L26 36 L6 40 L6 34 L26 26 Z" fill="#F5EFC6" stroke="#38BDF8" stroke-width="1.5"/></g></svg>`;
+      const planeIconSVG = `<svg viewBox="0 0 64 64" width="48" height="48"><g transform="rotate(90 32 32)"><path d="M32 4 L38 26 L58 34 L58 40 L38 36 L34 54 L44 60 L44 64 L32 60 L20 64 L20 60 L30 54 L26 36 L6 40 L6 34 L26 26 Z" fill="#C6A77E" stroke="#C56A79" stroke-width="1.5"/></g></svg>`;
       function groundIconSVG(kind) {
         if (kind === 'car') {
-          return `<svg viewBox="0 0 100 46" width="74" height="34"><path d="M8 34 Q8 18 26 16 L38 16 Q46 4 62 4 L72 16 Q92 18 92 34 L92 36 L8 36 Z" fill="#F8FAFC" stroke="#38BDF8" stroke-width="2"/><circle cx="26" cy="36" r="7" fill="#0D0B12"/><circle cx="74" cy="36" r="7" fill="#0D0B12"/></svg>`;
+          return `<svg viewBox="0 0 100 46" width="74" height="34"><path d="M8 34 Q8 18 26 16 L38 16 Q46 4 62 4 L72 16 Q92 18 92 34 L92 36 L8 36 Z" fill="#FDF8F5" stroke="#C6A77E" stroke-width="2"/><circle cx="26" cy="36" r="7" fill="#120D0E"/><circle cx="74" cy="36" r="7" fill="#120D0E"/></svg>`;
         }
-        return `<svg viewBox="0 0 140 46" width="100" height="34"><rect x="4" y="6" width="132" height="28" rx="10" fill="#E2E8F0" stroke="#38BDF8" stroke-width="2"/><circle cx="24" cy="38" r="6" fill="#0D0B12"/><circle cx="116" cy="38" r="6" fill="#0D0B12"/></svg>`;
+        return `<svg viewBox="0 0 140 46" width="100" height="34"><rect x="4" y="6" width="132" height="28" rx="10" fill="#E2E8F0" stroke="#C6A77E" stroke-width="2"/><circle cx="24" cy="38" r="6" fill="#120D0E"/><circle cx="116" cy="38" r="6" fill="#120D0E"/></svg>`;
       }
 
       function buildFlightScene({ from, to }) {
@@ -672,7 +695,7 @@
 
       function buildGroundScene({ kind }) {
         const pathD = kind === 'metro' ? 'M -40 0 Q 270 -14 310 0' : 'M -60 0 Q 290 10 640 0';
-        return `<div class="transit-stage">${skyDecor(false)}<div class="road-strip"></div><div class="transit-icon ground" id="movingIcon" style="bottom:58px; top:auto; offset-path: path('${pathD}');">${groundIconSVG(kind)}</div></div>`;
+        return `<div class="transit-stage">${skyDecor(false)}<div class="road-strip"></div><div class="transit-icon ground" id="movingIcon" style="bottom:58px; top:auto; offset-path: path('${pathD}'); width:auto; height:auto;">${groundIconSVG(kind)}</div></div>`;
       }
 
       function playIconAnimation(duration) {
@@ -704,16 +727,18 @@
         runCinema({
           meta: 'Flight DP991 · Boeing 737-800', title: 'Москва (VKO) ➔ Dubai (DWC)', night: false,
           sceneHtml: buildFlightScene({ from: 'VKO', to: 'DWC' }), iconDuration: 3400, revealDelay: 3400,
-          reveal: { stamp: 'DWC<br>UAE', photo: { src: 'burj.jpg.JPG' }, title: '«Добро пожаловать в Эмираты!»', subtitle: 'Посадка в DWC состоялась', btnLabel: 'Посмотреть детали ➔', btnColor: 'var(--cerulean-blue)' },
+          reveal: { stamp: 'DWC<br>UAE', photo: { src: 'burj.jpg.JPG' }, title: '«Добро пожаловать в Эмираты!»', subtitle: 'Посадка в DWC состоялась', btnLabel: 'Посмотреть детали ➔', btnColor: 'var(--c-pink-coral)' },
           onGo: () => switchScreen('screen-flight1')
         });
       });
 
+      /* Автоматический запуск Desert Rose на этапе трансфера в RAK */
       document.getElementById('btnLaunchTransfer1').addEventListener('click', () => {
+        if (desertRosePlayer) desertRosePlayer.play();
         runCinema({
           meta: 'Private Transfer · Toyota', title: 'DWC Airport ➔ Rove Al Marjan', night: true,
           sceneHtml: buildGroundScene({ kind: 'car' }), iconDuration: 3200, revealDelay: 3200,
-          reveal: { stamp: 'RAK<br>❦', photo: { src: 'rove.jpg.JPG' }, title: '«Прибыли в Rove Al Marjan!»', subtitle: '5 дней пляжного релакса', btnLabel: 'В отель ➔', btnColor: 'var(--cerulean-blue)' },
+          reveal: { stamp: 'RAK<br>❦', photo: { src: 'rove.jpg.JPG' }, title: '«Прибыли в Rove Al Marjan!»', subtitle: '5 дней пляжного релакса', btnLabel: 'В отель ➔', btnColor: 'var(--c-pink-coral)' },
           onGo: () => switchScreen('screen-rak')
         });
       });
@@ -724,16 +749,18 @@
         runCinema({
           meta: 'Flight Air Arabia G9802', title: 'Sharjah (SHJ) ➔ Kuala Lumpur (KUL)', night: true,
           sceneHtml: buildFlightScene({ from: 'SHJ', to: 'KUL' }), iconDuration: 3400, revealDelay: 3400,
-          reveal: { stamp: 'KUL<br>MY', photo: null, title: '«Добро пожаловать в Малайзию!»', subtitle: 'Приземление в Куала-Лумпуре', btnLabel: 'К апартаментам ➔', btnColor: 'var(--cerulean-blue)' },
+          reveal: { stamp: 'KUL<br>MY', photo: null, title: '«Добро пожаловать в Малайзию!»', subtitle: 'Приземление в Куала-Лумпуре', btnLabel: 'К апартаментам ➔', btnColor: 'var(--c-pink-coral)' },
           onGo: () => switchScreen('screen-kl')
         });
       });
 
+      /* Автоматический запуск After Hours при прибытии метро на стадион */
       document.getElementById('btnLaunchMetro').addEventListener('click', () => {
+        if (afterHoursPlayer) afterHoursPlayer.play();
         runCinema({
           meta: 'LRT Sri Petaling Line', title: 'Hang Tuah ➔ Bukit Jalil Stadium', night: true,
           sceneHtml: buildGroundScene({ kind: 'metro' }), iconDuration: 3000, revealDelay: 3000,
-          reveal: { stamp: 'BJS<br>2026', photo: null, title: '«Стадион Bukit Jalil!»', subtitle: 'Встречаем The Weeknd!', btnLabel: 'На концерт ➔', btnColor: 'var(--sceptre-red)' },
+          reveal: { stamp: 'BJS<br>2026', photo: null, title: '«Стадион Bukit Jalil!»', subtitle: 'Встречаем The Weeknd!', btnLabel: 'На концерт ➔', btnColor: 'var(--c-burgundy)' },
           onGo: () => switchScreen('screen-weeknd')
         });
       });
@@ -744,7 +771,7 @@
         runCinema({
           meta: 'Flight Emirates EK347 & EK133', title: 'Kuala Lumpur ➔ Dubai ➔ Москва', night: false,
           sceneHtml: buildFlightScene({ from: 'KUL', to: 'DXB' }), iconDuration: 3400, revealDelay: 3400,
-          reveal: { stamp: 'MSK<br>♥', photo: null, title: '«Домой, в Москву!»', subtitle: 'Путешествие завершено', btnLabel: 'В кабинет документов ➔', btnColor: 'var(--cerulean-blue)' },
+          reveal: { stamp: 'MSK<br>♥', photo: null, title: '«Домой, в Москву!»', subtitle: 'Путешествие завершено', btnLabel: 'В кабинет документов ➔', btnColor: 'var(--c-pink-coral)' },
           onGo: () => switchScreen('screen-cabinet')
         });
       });
